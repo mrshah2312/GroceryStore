@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'css/step-wizard.css' %}" rel="stylesheet">
+<link href="{% static 'vendor/unicons-2.0.1/css/unicons.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block main_content %}
+
+
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">User Dashboard</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-group">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="user-dt">
+                        <div class="user-img">
+                            <img src="{% static 'images/avatar/img-5.jpg' %}" alt="">
+                            <div class="img-add">
+                                <input type="file" id="file">
+                                <label for="file"><i class="uil uil-camera-plus"></i></label>
+                            </div>
+                        </div>
+                        <h4></h4>
+                        <p>{{request.session.Email}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 col-md-12">
+                    <div class="left-side-tabs">
+                        <div class="dashboard-left-links">
+                            <a href="{% url 'My_profile' %}" class="user-item active"><i class="uil uil-user"></i>My
+                                Profile</a>
+                            <a href="{% url 'My_orders' %}" class="user-item"><i class="uil uil-box"></i>My
+                                Orders</a>
+                            <a href="{% url 'My_wishlist' %}" class="user-item"><i class="uil uil-heart"></i>My
+                                Wishlist</a>
+                            <a href="{% url 'My_orders' %}" class="user-item"><i class="uil uil-location-point"></i>My
+                                Address</a>
+                            <a href="{% url 'Changepass_page' %}" class="user-item"><i class="uil uil-lock"></i>Change
+                                Password</a>
+                            <a href="{% url 'Signout' %}" class="user-item"><i class="uil uil-exit"></i>Signout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-8 col-md-12">
+                    <div class="dashboard-right">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-title-tab">
+                                    <h4><i class="uil uil-user"></i>My Profile</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="pdpt-bg">
+                                    <div class="pdpt-title">
+                                        <h4></h4>
+                                    </div>
+                                    <div class="add-address-form">
+                                        <div class="checout-address-step">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <form action="{% url 'Profile_update' %}" method="post">
+                                                        {% csrf_token %}
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">First Name :</label>
+                                                                <input id="firstname" name="firstname" type="text"
+                                                                    placeholder="First Name"
+                                                                    class="form-control input-md" required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">Last Name :</label>
+                                                                <input id="lastname" name="lastname" type="text"
+                                                                    placeholder="Last Name"
+                                                                    class="form-control input-md" required="">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">Contact :</label>
+                                                                <input id="contact" name="contact" type="tel"
+                                                                    placeholder="Contact" class="form-control input-md"
+                                                                    required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">Birth Date :</label>
+                                                                <input id="birthdate" name="birthdate" type="date"
+                                                                    placeholder="birth date"
+                                                                    class="form-control input-md" required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">Gender :</label>
+                                                                <input id="gender" name="gender" type="text"
+                                                                    placeholder="gender" class="form-control input-md"
+                                                                    required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">City :</label>
+                                                                <input id="city" name="city" type="text"
+                                                                    placeholder="city" class="form-control input-md"
+                                                                    required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">State :</label>
+                                                                <input id="state" name="state" type="text"
+                                                                    placeholder="state" class="form-control input-md"
+                                                                    required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group mt-4">
+                                                                <label class="control-label">Pincode :</label>
+                                                                <input id="pincode" name="pincode" type="text"
+                                                                    placeholder="pincode" class="form-control input-md"
+                                                                    required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 col-md-12">
+                                                            <div class="form-group mt-30">
+                                                                <div class="address-btns">
+                                                                </div>
+                                                                <center>
+                                                                    <button class="add-address hover-btn">Save</button>
+                                                                </center>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/product.thumbnail.slider.js' %}"></script>
+{% endblock %}
