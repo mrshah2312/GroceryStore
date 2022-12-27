@@ -29,11 +29,13 @@ class UserProfile(models.Model):
     Lastname = models.CharField(max_length=50)
     Contact = models.CharField(max_length=50)
     ProfileImage = models.ImageField(upload_to="profiles/", default='avatar.png')
-    Gender = models.CharField(max_length=10, choices=gender_choices)
+    Gender = models.CharField(max_length=10)
     BirthDate = models.DateField(default="1990-01-01")
     State = models.CharField(max_length=30, blank=True, default='')
     City =  models.CharField(max_length=30, blank=True, default='')
-    Address = models.CharField(max_length=30, blank=True, default='')
+    HomeAddress = models.CharField(max_length=30, blank=True, default='')
+    OfficeAddress = models.CharField(max_length=30, blank=True, default='')
+    OtherAddress = models.CharField(max_length=30, blank=True, default='')
     Pincode = models.CharField(max_length=6,blank=True,default='')
 
     class Meta:

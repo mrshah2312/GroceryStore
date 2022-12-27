@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-dt">
                                 <div class="form-inpts checout-address-step">
-                                    <form action="{% url 'otp_page' %}" method="post">
+                                    <form action="{% url 'verify_otp' verify_for=request.session.otp_for %}" method="post">
                                         {% csrf_token %}
                                         <div class="form-title">
                                             <h6>Enter OTP Here</h6>

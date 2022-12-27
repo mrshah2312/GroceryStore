@@ -46,6 +46,12 @@ def Aboutus_page(request):
 def Shopgrid_page(request):
     return render(request,"shopgrid.html")
 
+def Contactus_page(request):
+    return render(request,"contact_us.html")
+
+def Checkout_page(request):
+    return render(request,"checkout.html")
+
 
 
 
@@ -113,12 +119,30 @@ def Profile_update(request):
 
     return redirect(my_profile)
 
+def Add_address(request):
+    master = Master.objects.get(Email=request.session['email'])
+    address = UserProfile.objects.get(Master = master)
+    address.HomeAddress = request.POST['home_address']
+    address.OfficeAddress = request.POST['office_address']
+    address.OtherAddress = request.POST['other_Address']
+
+    address.save()
+    return redirect(My_addresses)
+
 #Load Profile data
 
 # def Profile_data(request):
 #     master = Master.objects.get(Email = request.POST['email'])
 #     user_profile = UserProfile.objects.get(Master = master)
 #     user_profile.email = Master.Email
+
+def profile_data(request):
+    master = Master.objects.get(Email = request.session['email'])
+    user_profile = UserProfile.objects.get(Master = master)
+    user_profile.first_name = user_profile.Firstname
+    user_profile.last_name = user_profile.Lastname
+
+    default_data['user_data'] = user_profile
 
 
 # Change Password Functionlity
@@ -142,5 +166,70 @@ def Changepass(request):
 def Create_otp(request):
     otp_number = randint(100000, 999999)
     request.session['otp'] = otp_number
+
+
+# send_otp
+def send_otp(request, otp_for="register"):
+    print(otp_for)
+    otp(request)
+
+    email_to_list = [request.session['reg_data']['email'],]
+
+    if otp_for == 'activate':
+        request.session['otp_for'] = 'activate'
+        subject = f'OTP for Budget Account Activation'
+    elif otp_for == 'recover_pwd':
+        request.session['otp_for'] = 'recover_pwd'
+        subject = f'OTP for Budget Password Recovery'
+    else:
+        request.session['otp_for'] = 'register'
+        subject = f'OTP for Budget Registration'
+
+    email_from = settings.EMAIL_HOST_USER
+
+    message = f"Your One Time Password for verification is: {request.session['otp']}."
+
+    send_mail(subject, message, email_from, email_to_list)
+
+
+# verify otp
+def verify_otp(request, verify_for="register"):
+
+    if request.session['otp'] == int(request.POST['otp']):
+
+        if verify_for == 'activate':
+            master = Master.objects.get(Email=request.session['reg_data']['email'])
+            # master.Password = request.session['reg_data']['password']
+            master.IsActive = True
+            master.save()
+
+
+            return redirect(profile_page)
+        elif verify_for == 'recover_pwd':
+            master = Master.objects.get(Email=request.session['reg_data']['email'])
+            master.Password = request.session['reg_data']['password']
+            master.save()
+        else:
+            print('before new account')
+            master = Master.objects.create(
+                Email = request.session['reg_data']['email'],
+                Password = request.session['reg_data']['password'],
+                IsActive = True,
+            )
+
+            UserProfile.objects.create(
+                Master = master,
+            )
+            print('after new account')
+
+        print("verified.")
+        del request.session['reg_data']
+
+    else:
+        print("Invalid OTP")
+        
+        return redirect(otp_page)
+    
+    return redirect(Signin_page)
 
 
